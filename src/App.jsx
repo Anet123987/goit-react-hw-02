@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './App.module.css';
+import Description from './components/Description';
 import Options from './components/Options';
 import Feedback from './components/Feedback';
 import Notification from './components/Notification';
@@ -29,33 +30,30 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem('feedback', JSON.stringify(feedback));
   }, [feedback]);
-
-  return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Sip Happens Café</h1>
-      <p className={styles.subtitle}>
-        Please leave your feedback about our service by selecting one of the options below.
-      </p>
-
-      <Options
-        onLeaveFeedback={updateFeedback}
-        onReset={resetFeedback}
-        hasFeedback={totalFeedback > 0}
-      />
-
-      {totalFeedback > 0 ? (
-        <Feedback
-          good={feedback.good}
-          neutral={feedback.neutral}
-          bad={feedback.bad}
-          total={totalFeedback}
-          positivePercentage={positivePercentage}
+    return (
+      <div className={styles.container}>
+        <Description />
+  
+        <Options
+          onLeaveFeedback={updateFeedback}
+          onReset={resetFeedback}
+          hasFeedback={totalFeedback > 0}
         />
-      ) : (
-        <Notification message="No feedback yet" />
-      )}
-    </div>
-  );
-};
+  
+        {totalFeedback > 0 ? (
+          <Feedback
+            good={feedback.good}
+            neutral={feedback.neutral}
+            bad={feedback.bad}
+            total={totalFeedback}
+            positivePercentage={positivePercentage}
+          />
+        ) : (
+          <Notification message="No feedback yet" />
+        )}
+      </div>
+    );
+  };
+  
 
 export default App;
